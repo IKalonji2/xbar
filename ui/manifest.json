@@ -1,0 +1,14 @@
+{
+    "name" : "DEX Swap On X",
+    "description" : "the trail version of the injected dex swap card",
+    "version" : "1.0",
+    "manifest_version" : 3,
+    "permissions" : ["tabs", "activeTab","scripting"],
+    "content_scripts" : [
+        {
+            "matches" :[ "https://x.com/*"],
+            "js" : ["content.js"],
+            "css" :[ "styles.css"]        }
+    ]
+    
+}
