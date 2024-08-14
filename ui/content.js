@@ -47,12 +47,15 @@ async function addCustomCard(targetElement) {
 
     card.innerHTML = `
         <div class="card-content">
-            <h3>Dex On X</h3>
-            <div id="chart-container">
-                <canvas id="chart" width="400" height="200"></canvas>
-                <div id="y-axis"></div>
-                <div id="x-axis"></div>
+            <div id="chart-bg">
+                <h3>Dex On X</h3>
+                <div id="chart-container">
+                    <canvas id="chart" width="400" height="200"></canvas>
+                    <div id="y-axis"></div>
+                    <div id="x-axis"></div>
+                </div>
             </div>
+            
             <div id="market-data">
                 <div class="inline">
                     <p>Market Cap</p>
@@ -74,7 +77,6 @@ async function addCustomCard(targetElement) {
                     </div>
                 </label>
             </div>
-            <div></div>
             <div class="form-group">
                 <label class="input-label">
                     <span class="form-label">Buy</span>
@@ -99,11 +101,27 @@ async function addCustomCard(targetElement) {
     // Add CSS for the card
     const style = document.createElement('style');
     style.textContent = `
+        .custom-card {
+            border: 2.5px solid #050505;
+            padding: 16px;
+            margin: 16px 0;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
         #chart-container {
             position: relative;
-            width: 400px;
+            width: 410px;
             height: 200px;
             margin: 20px auto;
+            
+        }
+        #chart-bg{
+            background-color: #ddd;
+            border: 1.5px solid #000;
+            box-shadow: 1.5px 1.5px #000;
+            padding-right: 20px;
         }
         #chart {
             border: 1px solid #000;
@@ -125,7 +143,7 @@ async function addCustomCard(targetElement) {
         }
         #y-axis .price-label {
             padding-right: 5px;
-            font-size: 10px;
+            font-size: 0.625rem;
         }
         #x-axis {
             position: absolute;
@@ -137,7 +155,7 @@ async function addCustomCard(targetElement) {
             justify-content: space-between;
         }
         #x-axis .date-label {
-            font-size: 10px;
+            font-size: 0.625rem;
             text-align: center;
             transform: translateX(-50%);
         }
@@ -153,8 +171,9 @@ async function addCustomCard(targetElement) {
             align-items: flex-start;
             background-color: #ddd;
             padding: 20px;
-            border-radius: 8px;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            border: 1.5px solid #000;
+            box-shadow: 1.5px 1.5px #000;
+            margin-bottom: 8px;
         }
         .input-label {
             display: flex;
@@ -164,7 +183,7 @@ async function addCustomCard(targetElement) {
         }
 
         .form-label {
-            font-size: 10px;
+            font-size: 0.625rem;
             margin-bottom: 5px;
             color: #555;
         }
@@ -178,15 +197,14 @@ async function addCustomCard(targetElement) {
         .form__input {
             flex: 1;
             padding: 10px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            font-size: 16px;
-            background-color: transparent;
+            border: 1px solid #000;
+            font-size: 1rem;
+            background-color: white;
         }
 
         .form-token {
             margin-left: 10px;
-            font-size: 16px;
+            font-size: 1rem;
             color: #555;
         }
         .transact{    
@@ -195,18 +213,17 @@ async function addCustomCard(targetElement) {
             justify-content : center;
             align-items : center;
 
-            background-color: #ff0095;
-            border-radius: 10px;
-            border-style: none;
+            background-color: #fc3aac;
+            border: 2px solid black;
 
             padding: 5px;
             width:25%;
-            box-shadow: 5px 5px #ddd;
+            box-shadow: 5px 5px #050505;
             margin-top: 10px;
         }
         .transact:hover{
     
-            background-color: yellow;
+            background-color: #ffff24;
         }
         .transact-container{
             display : flex;
@@ -215,13 +232,19 @@ async function addCustomCard(targetElement) {
             align-items : center;
         }
         #market-data {
-            margin-top: 20px;
+            margin-top: 10px;
             text-align: center;
             width: 100%
         }
         .inline { 
             display: inline-block; 
             margin:10px;
+
+            border: 1.5px solid #000;
+            padding-right: 5px;
+            padding-left: 5px;
+
+            background-color: #ffffff;
         }
     `;
     document.head.appendChild(style);
@@ -264,7 +287,11 @@ async function addCustomCard(targetElement) {
 
         const xAxis = document.getElementById('x-axis');
         xAxis.innerHTML = '';
+        // let date = '';
+        // let dateLabel = '';
         recentData.forEach((d, i) => {
+            // date = new Date(d.timestamp * 1000);
+            // dateLabel = date.toLocaleDateString();
             const time = d.timestamp.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
 
             const labelContainer = document.createElement('div');
@@ -273,6 +300,12 @@ async function addCustomCard(targetElement) {
             labelContainer.style.left = `${i * (candleWidth + candleSpacing) + candleWidth / 2}px`;
             xAxis.appendChild(labelContainer);
         });
+
+        // const collectionDay = document.getElementById('chart-bg');
+        // const markDay = document.createElement('div');
+        // markDay.className = 'calender-day';
+        // markDay.innerHTML = dateLabel;
+        // collectionDay.appendChild(markDay);
 
     
         recentData.forEach((d, i) => {
