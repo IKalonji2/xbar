@@ -1,0 +1,168 @@
+* {
+    color: black;
+}
+.swap-card {
+    border: 2.5px solid #050505;
+    padding: 16px;
+    margin: 16px 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+.launch-card{
+    border: 2.5px solid #050505;
+    padding: 16px;
+    margin: 16px 0;
+    background: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+#chart-container {
+    position: relative;
+    width: 410px;
+    height: 200px;
+    margin: 20px auto;
+    
+}
+#chart-bg{
+    background-color: #ddd;
+    border: 1.5px solid #000;
+    box-shadow: 1.5px 1.5px #000;
+    padding-right: 20px;
+}
+#chart {
+    border: 1px solid #000;
+    margin-left: 60px; 
+    margin-bottom: 50px;
+    width: 330px;
+    height: 150px;
+}
+#y-axis {
+    position: absolute;
+    left: 0;
+    top: 0;
+    bottom: 50px;
+    width: 60px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: flex-end;
+}
+#y-axis .price-label {
+    padding-right: 5px;
+    font-size: 0.625rem;
+}
+#x-axis {
+    position: absolute;
+    left: 60px;
+    right: 0;
+    bottom: 0;
+    height: 30px;
+    display: flex;
+    justify-content: space-between;
+}
+#x-axis .date-label {
+    font-size: 0.625rem;
+    text-align: center;
+    transform: translateX(-50%);
+}
+h3 {
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+}
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #ddd;
+    padding: 20px;
+    border: 1.5px solid #000;
+    box-shadow: 1.5px 1.5px #000;
+    margin-bottom: 8px;
+}
+.input-label {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    width: 100%;
+}
+
+.form-label {
+    font-size: 0.625rem;
+    margin-bottom: 5px;
+    color: #555;
+}
+
+.input-container {
+    display: flex;
+    align-items: center;
+    width: 100%;
+}
+
+.form__input {
+    flex: 1;
+    padding: 10px;
+    border: 1px solid #000;
+    font-size: 1rem;
+    background-color: white;
+}
+
+.form-token {
+    margin-left: 10px;
+    font-size: 1rem;
+    color: #555;
+}
+.transact{    
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+
+    background-color: #fc3aac;
+    border: 2px solid black;
+
+    padding: 5px;
+    width:25%;
+    box-shadow: 5px 5px #050505;
+    margin-top: 10px;
+}
+.transact:hover{
+
+    background-color: #ffff24;
+}
+.transact-container{
+    display : flex;
+    flex-direction : column;
+    justify-content : center;
+    align-items : center;
+}
+#market-data {
+    margin-top: 10px;
+    text-align: center;
+    width: 100%
+}
+.inline { 
+    display: inline-block; 
+    margin:10px;
+
+    border: 1.5px solid #000;
+    padding-right: 5px;
+    padding-left: 5px;
+
+    background-color: #ffffff;
+}
+
+#title-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.xLogo {
+    width: 50%;
+    height: 50%;
+}

@@ -3,12 +3,20 @@
     "description" : "the trail version of the injected dex swap card",
     "version" : "1.0",
     "manifest_version" : 3,
-    "permissions" : ["tabs", "activeTab","scripting"],
+    "permissions" : ["tabs", "activeTab","scripting","storage"],
     "content_scripts" : [
         {
             "matches" :[ "https://x.com/*"],
-            "js" : ["content.js"],
-            "css" :[ "styles.css"]        }
+            "js" : ["src/content.js"],
+            "css" :["src/styles.css"],
+            "run_at": "document_end"
+        }
+    ],
+    "web_accessible_resources": [
+        {
+            "resources": ["assets/xBarLogo.png"],
+            "matches": ["https://x.com/*"]
+        }
     ]
     
 }
