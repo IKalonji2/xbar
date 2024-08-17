@@ -218,7 +218,7 @@ async function launchOnXCard(targetElement) {
     
     const logo = document.createElement('img');
     logo.className = 'xLogo';
-    logo.src = "/xBarLogo.png";
+    logo.src = "../src/assets/xBarLogo.png";
     logo.alt = "xBar logo";
     
     card.innerHTML = `

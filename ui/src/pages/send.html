@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../index.css">
+    <title>Send Tokens</title>
+</head>
+<body>
+    <div class="wallet-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="toggle-button">
+                <img id="toggle-icon" src="../assets/menu_open.svg" alt="Toggle Sidebar">
+            </div>
+            <div class="logo" id="logo">xbar</div>
+            <ul class="nav">
+                <li><a href="../src/xbar-wallet.html">Dashboard</a></li>
+                <li><a href="../src/pages/send.html">Send</a></li>
+                <li><a href="../src/pages/receive.html">Receive</a></li>
+                <li><a href="../src/pages/transactions.html">Transactions</a></li>
+                <li><a href="../src/pages/settings.html">Settings</a></li>
+            </ul>
+        </aside>
+        <main class="main-content">
+            <section id="send" class="send">
+                <h2>Send Funds</h2>
+                <form id="send-form">
+                    <label for="recipient-address">Recipient Address</label>
+                    <input type="text" id="recipient-address" placeholder="Enter wallet address">
+                    
+                    <label for="amount">Amount</label>
+                    <input type="text" id="amount" placeholder="Enter amount">
+                    
+                    <button type="submit">Send</button>
+                </form>
+            </section>
+        </main>
+    </div>
+    <script src="../src/index.js"></script>
+
+</body>
+</html>

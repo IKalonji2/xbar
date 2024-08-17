@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>xBar Wallet</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+<body>
+    <div class="wallet-container">
+        <aside class="sidebar" id="sidebar">
+            <div class="toggle-button">
+                <img id="toggle-icon" src="../src/assets/menu_open.svg" alt="Toggle Sidebar">
+            </div>
+            <div class="logo" id="logo">xbar</div>
+            <ul class="nav">
+                <li><a href="../src/xbar-wallet.html">Dashboard</a></li>
+                <li><a href="../src/pages/send.html">Send</a></li>
+                <li><a href="../src/pages/receive.html">Receive</a></li>
+                <li><a href="../src/pages/transactions.html">Transactions</a></li>
+                <li><a href="../src/pages/settings.html">Settings</a></li>
+            </ul>
+        </aside>
+
+        <main class="main-content" id="main-content">
+            <section id="dashboard" class="dashboard">
+                <h2>Dashboard</h2>
+                <div class="balance">
+                    <h3>Total Balance</h3>
+                    <p>1.2345 BTC</p>
+                </div>
+                <div class="assets">
+                    <div class="asset">
+                        <h4>Bitcoin</h4>
+                        <p>1.2345 BTC</p>
+                    </div>
+                    <div class="asset">
+                        <h4>Ethereum</h4>
+                        <p>10.6789 ETH</p>
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+    <script src="../src/index.js"></script>
+</body>
+</html>
