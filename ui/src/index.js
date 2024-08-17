@@ -4,7 +4,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const mainContent = document.getElementById('main-content');
 
     logo.addEventListener('click', function() {
-        sidebar.classList.toggle('closed');
+        // sidebar.classList.toggle('closed');
         sidebar.classList.toggle('shrink');
         mainContent.classList.toggle('expanded');
     });
