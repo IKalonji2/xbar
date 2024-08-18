@@ -102,7 +102,7 @@ async function swapOnXCard(targetElement) {
         </div>
         <div class="form-group">
             <label class="input-label">
-                <span class="form-label">Sell</span>
+                <span class="form-label">Swap</span>
                 <div class="input-container">
                     <input type="text" placeholder="0" class="form__input" id="tokenAVal" />
                     <div id="tokenA" class="form-token">
@@ -113,9 +113,9 @@ async function swapOnXCard(targetElement) {
         </div>
         <div class="form-group">
             <label class="input-label">
-                <span class="form-label">Buy</span>
+                <span class="form-label">Receive</span>
                 <div class="input-container">
-                    <input type="text" placeholder="0" class="form__input" id="tokenBVal" />
+                    <input type="text" class="form__input" id="tokenBVal" value="" readonly />
                     <div id="tokenB" class="form-token">
                         tokenB
                     </div>
@@ -210,6 +210,7 @@ async function swapOnXCard(targetElement) {
     await renderChart();
     await renderMarketData();
 }
+
 async function launchOnXCard(targetElement) {
     if (document.querySelector('.launch-card')) return;
 
@@ -218,13 +219,12 @@ async function launchOnXCard(targetElement) {
     
     const logo = document.createElement('img');
     logo.className = 'xLogo';
-    logo.src = "../src/assets/xBarLogo.png";
+    logo.src = chrome.runtime.getURL('../src/assets/xBarLogo.png');
     logo.alt = "xBar logo";
     
     card.innerHTML = `
      <div class="card-content">
         <div id="title-container">
-            <h3>Dex On X</h3>
         </div>
         <div class="form-group">
             <label class="input-label">
@@ -286,6 +286,48 @@ async function launchOnXCard(targetElement) {
     }
 }
 
+document.addEventListener('DOMContentLoaded', function () {
+    const tokenA = document.getElementById('tokenAVal');
+    const tokenB = document.getElementById('tokenBVal');
+    const swapButton = document.getElementById('swap');
+
+    function calculateAndSet() {
+        const aValue = parseFloat(tokenA.value);
+        if (!isNaN(aValue)) {
+            tokenB.value = aValue * 1500;
+        } else {
+            tokenB.value = '';
+            console.error('Input is not a valid number');
+        }
+    }
+
+    // Trigger calculation on "Swap" button click
+    if (swapButton) {
+        swapButton.addEventListener('click', calculateAndSet);
+    } else {
+        console.error('Swap button not found');
+    }
+
+    // Optional: Trigger calculation on input event
+    if (tokenA && tokenB) {
+        tokenA.addEventListener('input', calculateAndSet);
+
+        // Optional: Trigger calculation when Enter is pressed or on focusout
+        tokenA.addEventListener('keydown', function(event) {
+            if (event.key === 'Enter') {
+                event.preventDefault(); // Prevent default action
+                calculateAndSet();
+                tokenA.blur(); // Move focus away (optional)
+            }
+        });
+
+        tokenA.addEventListener('focusout', calculateAndSet);
+    } else {
+        console.error('Elements not found');
+    }
+});
+
+
 function observeAndAddCard() {
     const observer = new MutationObserver((mutations) => {
         mutations.forEach((mutation) => {
@@ -307,6 +349,22 @@ function setupEventListeners() {
     window.addEventListener('load', observeAndAddCard);
     window.addEventListener('scroll', observeAndAddCard);
     document.addEventListener('click', observeAndAddCard);
+    
 }
+// function onChangeCalculate(e) {
+//     // Log the value to ensure the function is being called
+//     console.log(e.target.value);
 
-setupEventListeners()
+//     // Get the element with ID 'tokenBVal'
+//     var tokenBInput = document.getElementById('tokenBVal');
+
+//     // Check if the element exists
+//     if (tokenBInput) {
+//         // Update the value of 'tokenBVal' input
+//         tokenBInput.value = e.target.value;
+//     } else {
+//         console.error('Element with ID tokenBVal not found.');
+//     }
+// }
+
+setupEventListeners();
