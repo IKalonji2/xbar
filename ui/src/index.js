@@ -1,19 +1,50 @@
-// document.addEventListener('DOMContentLoaded', function() {
-//     const logo = document.getElementById('logo');
-//     const sidebar = document.getElementById('sidebar');
-//     const mainContent = document.getElementById('main-content');
+//to be edited for the interaction with the api
+function getDataFromAPI() {
+    const apiUrl = 'https://api.xbar.com/data';
 
-//     logo.addEventListener('click', function() {
-//         // sidebar.classList.toggle('closed');
-//         sidebar.classList.toggle('shrink');
-//         mainContent.classList.toggle('expanded');
-//     });
-// });
+    fetch(apiUrl)
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data received:', data);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+}
 
-// function minimiseMenu() {
-//     const minimiser = document.getElementById('toggle-icon');
-//     const nav = document.getElementById('menu-items');
-//     minimiser.addEventListener('click', function() {
-//         nav.style.display = 'none'
-//     })
-// }
+getDataFromAPI();
+
+function sendDataToAPI() {
+    const apiUrl = 'https://api.xbar.com/submit';
+    const dataToSend = {
+        key1: 'value1',
+        key2: 'value2',
+    };
+
+    fetch(apiUrl, {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(dataToSend)
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Network response was not ok ' + response.statusText);
+        }
+        return response.json();
+    })
+    .then(data => {
+        console.log('Data successfully sent:', data);
+    })
+    .catch(error => {
+        console.error('There has been a problem with your fetch operation:', error);
+    });
+}
+
+sendDataToAPI();

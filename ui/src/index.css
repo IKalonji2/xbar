@@ -67,10 +67,17 @@ h2 {
     margin-bottom: 20px;
 }
 
+.bal-scale {
+    transition: transform .2s;
+}
+.bal-scale:hover{
+    transform: scale(1.5);;
+}
 .asset {
     border: 2px solid #ccc;
+    box-shadow: 5px 5px #ccc;
     padding: 10px;
-    margin-bottom: 10px;
+    margin-bottom: 15px;
 }
 
 .send input, .send button {
