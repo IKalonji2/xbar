@@ -209,6 +209,7 @@ async function swapOnXCard(targetElement) {
 
     await renderChart();
     await renderMarketData();
+    await simpleCal();
 }
 
 async function launchOnXCard(targetElement) {
@@ -286,7 +287,7 @@ async function launchOnXCard(targetElement) {
     }
 }
 
-document.addEventListener('DOMContentLoaded', function () {
+function simpleCal() {
     const tokenA = document.getElementById('tokenAVal');
     const tokenB = document.getElementById('tokenBVal');
     const swapButton = document.getElementById('swap');
@@ -301,23 +302,20 @@ document.addEventListener('DOMContentLoaded', function () {
         }
     }
 
-    // Trigger calculation on "Swap" button click
     if (swapButton) {
         swapButton.addEventListener('click', calculateAndSet);
     } else {
         console.error('Swap button not found');
     }
 
-    // Optional: Trigger calculation on input event
     if (tokenA && tokenB) {
         tokenA.addEventListener('input', calculateAndSet);
 
-        // Optional: Trigger calculation when Enter is pressed or on focusout
         tokenA.addEventListener('keydown', function(event) {
             if (event.key === 'Enter') {
-                event.preventDefault(); // Prevent default action
+                event.preventDefault();
                 calculateAndSet();
-                tokenA.blur(); // Move focus away (optional)
+                tokenA.blur();
             }
         });
 
@@ -325,7 +323,7 @@ document.addEventListener('DOMContentLoaded', function () {
     } else {
         console.error('Elements not found');
     }
-});
+};
 
 
 function observeAndAddCard() {
@@ -351,20 +349,5 @@ function setupEventListeners() {
     document.addEventListener('click', observeAndAddCard);
     
 }
-// function onChangeCalculate(e) {
-//     // Log the value to ensure the function is being called
-//     console.log(e.target.value);
-
-//     // Get the element with ID 'tokenBVal'
-//     var tokenBInput = document.getElementById('tokenBVal');
-
-//     // Check if the element exists
-//     if (tokenBInput) {
-//         // Update the value of 'tokenBVal' input
-//         tokenBInput.value = e.target.value;
-//     } else {
-//         console.error('Element with ID tokenBVal not found.');
-//     }
-// }
 
 setupEventListeners();
