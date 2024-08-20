@@ -1,11 +1,10 @@
 // Routes configuration
 const routes = {
-    '/': '../xbarPage/src/views/home.html',
-    '/about': 'about.html',
-    '/contact': 'src/views/contact.html'
+    '/': 'views/home.html',
+    '/about': 'views/about.html',
+    '/contact': 'views/contact.html'
 };
 
-// Function to load HTML content
 function loadView(view) {
     fetch(view)
         .then(response => response.text())
@@ -18,14 +17,12 @@ function loadView(view) {
         });
 }
 
-// Function to handle routing
 function navigateTo(path) {
     const view = routes[path] || routes['/'];
     loadView(view);
     window.history.pushState({}, '', path);
 }
 
-// Event listeners for navigation
 document.querySelectorAll('a[data-route]').forEach(link => {
     link.addEventListener('click', (event) => {
         event.preventDefault();
@@ -34,12 +31,10 @@ document.querySelectorAll('a[data-route]').forEach(link => {
     });
 });
 
-// Handle back/forward browser buttons
 window.onpopstate = () => {
     const path = window.location.pathname;
     navigateTo(path);
 };
 
-// Load initial content
 navigateTo(window.location.pathname);
 
