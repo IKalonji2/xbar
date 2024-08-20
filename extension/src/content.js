@@ -284,7 +284,7 @@ async function launchOnXCard(targetElement) {
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="x-png" class="form__input" id="x-png" accept="image/*"/>
+                    <input type="file" placeholder="x-png" class="form__input" id="x-png" accept="image/*"/>
                     <div id="xPng" class="form-token">
                         Upload Logo
                     </div>
