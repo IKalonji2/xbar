@@ -251,7 +251,7 @@ async function launchOnXCard(targetElement) {
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="x-token" class="form__input" id="x-token"/>
+                    <input type="text" placeholder="x-token" class="form__input" id="x-token" required/>
                     <div id="xToken" class="form-token">
                         Token Name
                     </div>
@@ -262,7 +262,7 @@ async function launchOnXCard(targetElement) {
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="x-token-symbol" class="form__input" id="x-token-symbol"/>
+                    <input type="text" placeholder="x-token-symbol" class="form__input" id="x-token-symbol" required />
                     <div id="xTokenSymbol" class="form-token">
                         Token Symbol
                     </div>
@@ -273,7 +273,7 @@ async function launchOnXCard(targetElement) {
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="0" class="form__input" id="supply"/>
+                    <input type="text" placeholder="0" class="form__input" id="supply" required />
                     <div id="xTokenSupply" class="form-token">
                         Supply
                     </div>
@@ -284,7 +284,7 @@ async function launchOnXCard(targetElement) {
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="x-png" class="form__input" id="x-png" accept="image/*"/>
+                    <input type="text" placeholder="image url" class="form__input" id="x-png" required/>
                     <div id="xPng" class="form-token">
                         Upload Logo
                     </div>
@@ -361,17 +361,18 @@ function launchToken() {
 
         const apiUrl = xbarUrl+'/launch'; //send request to the backend
 
-        const tokenVal = document.getElementById('tokenAVal').value.trim();
-        const file = tokenIcon.files[0];
-        if (!file) {
-            alert('Please select a file.');
-            return;
-        }
+        const tokenNameVal = document.getElementById('x-token').value.trim();
+        const tokenSymbol = document.getElementById('x-token-symbol').value.trim();
+        const tokenSupply = document.getElementById('supply').value.trim();
+        const tokenImgUrl = document.getElementById('x-png').value.trim();
+
+    
+
         const dataToSend = {
-            'token name': 'value1',
-            'token symbol': 'value2',
-            'supply' : 'value3',
-            'file' : file
+            'name': tokenNameVal,
+            'symbol': tokenSymbol,
+            'supply' : tokenSupply,
+            'logo' : tokenImgUrl
         };
 
         fetch(apiUrl, {
@@ -388,10 +389,10 @@ function launchToken() {
             return response.json();
         })
         .then(data => {
-            console.log('Data successfully sent:', data); //show alert with the swap string
+            swapStringAlert('Data successfully sent:', data.swap_str); //show alert with the swap string
         })
         .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            swapStringAlert('There has been a problem with your fetch operation:', error);
         });
     });
 }
@@ -415,8 +416,7 @@ function swapToken() {
             isValid = false;
         }
         const dataToSend = {
-            'swap': 'value1',
-            'receive': 'value2', //send xbar value and private key
+            'swap': tokenVal,  //send xbar value and private key
         };
 
         fetch(apiUrl, {
@@ -433,10 +433,10 @@ function swapToken() {
             return response.json();
         })
         .then(data => {
-            console.log('Data successfully sent:', data);
+            swapStringAlert('Data successfully sent:', data);
         })
         .catch(error => {
-            console.error('There has been a problem with your fetch operation:', error);
+            swapStringAlert('There has been a problem with your fetch operation:', error);
         });
     });
 }
@@ -467,6 +467,45 @@ function observeAndAddCard() {
         checkPostsForStrings();
     }, 3000);
 }
+
+function swapStringAlert(message, textToCopy) {
+    const custom_alert = document.createElement('div');
+    custom_alert.className = 'cust-alert';
+    custom_alert.setAttribute('id', 'customAlert');
+
+    custom_alert.innerHTML = `
+        <div class="alert-content">
+            <p id="alertMessage">${message}</p>
+            <input type="text" id="copyText" value="${textToCopy}">
+            <button id="copyBtn">Copy Text</button>
+            <button id="closeAlert">OK</button>
+        </div>
+    `;
+
+    document.body.appendChild(custom_alert);
+
+    const closeAlertBtn = document.getElementById('closeAlert');
+    const copyBtn = document.getElementById('copyBtn');
+    const copyText = document.getElementById('copyText');
+
+    function closeCustomAlert() {
+        custom_alert.style.display = 'none';
+        document.body.removeChild(custom_alert);
+    }
+
+    function copyToClipboard() {
+        copyText.select();
+        copyText.setSelectionRange(0, 99999); // For mobile devices
+        document.execCommand("copy");
+        alert("Copied the text: " + copyText.value);
+    }
+
+    closeAlertBtn.addEventListener('click', closeCustomAlert);
+    copyBtn.addEventListener('click', copyToClipboard);
+
+    custom_alert.style.display = 'flex';
+}
+
 
 function setupEventListeners() {
     window.addEventListener('load', observeAndAddCard);
