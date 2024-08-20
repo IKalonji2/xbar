@@ -1,8 +1,6 @@
 // Routes configuration
 const routes = {
-    '/': 'views/home.html',
-    '/about': 'views/about.html',
-    '/contact': 'views/contact.html'
+    '/': 'index.html',
 };
 
 function loadView(view) {

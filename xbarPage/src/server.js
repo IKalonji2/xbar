@@ -9,6 +9,11 @@ app.get('/', (req, res) => {
   res.sendFile(path.join(__dirname, 'public', 'index.html'));
 });
 
+app.post('/register', (req, res) => {
+  // Handle registration logic here
+  res.send('Registration successful!');
+});
+
 app.listen(port, () => {
   console.log(`Server is running at http://localhost:${port}`);
 });
