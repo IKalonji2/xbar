@@ -19,3 +19,10 @@
 - the market cap and liquidity amounts should be provided to the user
 - the user should be able to stipulate how much of token A they would like to swap, the number of token B they receive should be calculated based on the price of TokenA vs TokenB.
 - The user should connect their wallet and execute the trade and pay the fee.
+
+### create wallet
+
+- Create a cryto-wallet ui on the extension keeping the retro box theme
+- User should be able to sign up for the cryto-wallet account
+- User should be able to download an extesion.
+- The injection of the extension card should only happen when the user has the account with xBar, otherwise a link to the webpage where the account can be created or the wallet can be downloaded will be shared. 
