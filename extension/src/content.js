@@ -5,7 +5,7 @@ let getTokenNames = swapID.split('/');
 
 let postID;
 
-let xbarUrl = '';
+let xbarUrl = ''; //base url for the backend
 
 
 /**
@@ -17,7 +17,7 @@ async function fetchBitstampData(pair, interval) {
     try {
         const response = await fetch(`https://www.bitstamp.net/api/v2/ohlc/${pair}/?step=${interval}&limit=100`);
         const data = await response.json();
-        return data.data.ohlc;
+        return data.data.ohlc; //list to be received
     } catch (error) {
         console.error('Error fetching Bitstamp data:', error);
     }
@@ -156,7 +156,7 @@ async function swapOnXCard(targetElement) {
     
     // Fetch and render chart and market data
     async function renderChart() {
-        const rawData = await fetchBitstampData('btcusd', 3600); 
+        const rawData = await fetchBitstampData('btcusd', 3600); //change this to use only the backend
         const chartData = transformData(rawData);
 
 
@@ -222,7 +222,7 @@ async function swapOnXCard(targetElement) {
     }
 
     async function renderMarketData() {
-        const { marketCap, liquidityCap } = await fetchCoinGeckoData();
+        const { marketCap, liquidityCap } = await fetchCoinGeckoData(); //call the backend for token cap and liq
         document.getElementById('market-cap').textContent = `$${marketCap.toLocaleString()}`;
         document.getElementById('liquidity-cap').textContent = `$${liquidityCap.toLocaleString()}`;
     }
@@ -284,7 +284,7 @@ async function launchOnXCard(targetElement) {
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="file" placeholder="x-png" class="form__input" id="x-png" accept="image/*"/>
+                    <input type="text" placeholder="x-png" class="form__input" id="x-png" accept="image/*"/>
                     <div id="xPng" class="form-token">
                         Upload Logo
                     </div>
@@ -320,6 +320,7 @@ function simpleCal() {
 
     function calculateAndSet() {
         const aValue = parseFloat(tokenA.value);
+        //call backend to get the price of token A [token name -2]vs Token B[token name-1]
         if (!isNaN(aValue)) {
             tokenB.value = aValue * 1500;
         } else {
@@ -358,7 +359,7 @@ function launchToken() {
         event.preventDefault();
         console.log('You have hit launch');
 
-        const apiUrl = xbarUrl+'/launch';
+        const apiUrl = xbarUrl+'/launch'; //send request to the backend
 
         const tokenVal = document.getElementById('tokenAVal').value.trim();
         const file = tokenIcon.files[0];
@@ -387,7 +388,7 @@ function launchToken() {
             return response.json();
         })
         .then(data => {
-            console.log('Data successfully sent:', data);
+            console.log('Data successfully sent:', data); //show alert with the swap string
         })
         .catch(error => {
             console.error('There has been a problem with your fetch operation:', error);
@@ -415,7 +416,7 @@ function swapToken() {
         }
         const dataToSend = {
             'swap': 'value1',
-            'receive': 'value2',
+            'receive': 'value2', //send xbar value and private key
         };
 
         fetch(apiUrl, {

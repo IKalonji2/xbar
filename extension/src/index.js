@@ -16,9 +16,9 @@ function getUserData() {
 
 
     if(acc === null && encryptedKey === null) {
-        storeUserData(userAcc,prvKey);
+        storeUserData(userAcc,prvKey); //add api to create acc then store
     } 
-
+    //get users balance from api and return along with user data obj
     return { acc, privateKey};
 }
 
