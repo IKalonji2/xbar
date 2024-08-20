@@ -184,3 +184,7 @@ h3 {
 .inline:hover {
     transform: scale(1.2);
 }
+
+#pkey {
+    display: none;
+}

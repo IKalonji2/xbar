@@ -5,7 +5,7 @@
     "manifest_version" : 3,
     "permissions" : ["tabs", "activeTab","scripting","storage"],
     "action" : {
-        "default_popup": "src/xbar-login.html"
+        "default_popup": "src/xbar-wallet.html"
     },
     "content_scripts" : [
         {

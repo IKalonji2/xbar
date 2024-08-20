@@ -1,7 +1,12 @@
 const swapID = 'chain/xbar/v1/swap/tokenA/tokenB';
 const launchID = 'chain/xbar/v1/launch/token';
 
+let getTokenNames = swapID.split('/');
+
 let postID;
+
+let xbarUrl = '';
+
 
 /**
 * This function fetches API OHLC data (temp : Bitstamp)
@@ -75,10 +80,15 @@ async function swapOnXCard(targetElement) {
     const card = document.createElement('div');
     card.className = 'swap-card';
 
+    const logo = document.createElement('img');
+    logo.className = 'xLogo';
+    logo.src = chrome.runtime.getURL('../src/assets/xBarLogo.png');
+    logo.alt = "xBar logo";
+    
     card.innerHTML =  `
     <div class="card-content">
+        <div id="title-container"></div>
         <div id="chart-bg">
-            <h3>Dex On X</h3>
             <div id="chart-container">
                 <canvas id="chart" width="400" height="200"></canvas>
                 <div id="y-axis">
@@ -106,7 +116,7 @@ async function swapOnXCard(targetElement) {
                 <div class="input-container">
                     <input type="text" placeholder="0" class="form__input" id="tokenAVal" />
                     <div id="tokenA" class="form-token">
-                        tokenA
+                        ${getTokenNames.at(-2)}
                     </div>
                 </div>
             </label>
@@ -117,7 +127,7 @@ async function swapOnXCard(targetElement) {
                 <div class="input-container">
                     <input type="text" class="form__input" id="tokenBVal" value="" readonly />
                     <div id="tokenB" class="form-token">
-                        tokenB
+                        ${getTokenNames.at(-1)}
                     </div>
                 </div>
             </label>
@@ -127,6 +137,13 @@ async function swapOnXCard(targetElement) {
         </div>
     </div>`
 
+    const titleContent = card.querySelector('#title-container');
+    
+    if (titleContent) {
+        titleContent.appendChild(logo);
+    } else {
+        console.error('title-container not found in the card');
+    }
 
 
     if (targetElement) {
@@ -209,7 +226,7 @@ async function swapOnXCard(targetElement) {
 
     await renderChart();
     await renderMarketData();
-    await simpleCal();
+    simpleCal();
 }
 
 async function launchOnXCard(targetElement) {
@@ -230,42 +247,46 @@ async function launchOnXCard(targetElement) {
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="x-token" class="form__input" id="x-token" />
+                    <input type="text" placeholder="x-token" class="form__input" id="x-token"/>
                     <div id="xToken" class="form-token">
                         Token Name
                     </div>
                 </div>
             </label>
+            <span class="error-message" id="req-token-name"></span>
         </div>
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="x-token-symbol" class="form__input" id="x-token-symbol" />
+                    <input type="text" placeholder="x-token-symbol" class="form__input" id="x-token-symbol"/>
                     <div id="xTokenSymbol" class="form-token">
                         Token Symbol
                     </div>
                 </div>
             </label>
+            <span class="error-message" id="req-token-symbol"></span>
         </div>
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="0" class="form__input" id="supply" />
+                    <input type="text" placeholder="0" class="form__input" id="supply"/>
                     <div id="xTokenSupply" class="form-token">
                         Supply
                     </div>
                 </div>
             </label>
+            <span class="error-message" id="req-supply"></span>
         </div>
         <div class="form-group">
             <label class="input-label">
                 <div class="input-container">
-                    <input type="text" placeholder="x-png" class="form__input" id="x-png" />
+                    <input type="text" placeholder="x-png" class="form__input" id="x-png" accept="image/*"/>
                     <div id="xPng" class="form-token">
                         Upload Logo
                     </div>
                 </div>
             </label>
+            <span class="error-message" id="req-token-icon"></span>
         </div>
         <div class="transact-container">
             <button id="launch" class="transact">Launch</button>
@@ -285,6 +306,7 @@ async function launchOnXCard(targetElement) {
     } else {
         console.error('Target element not provided');
     }
+    launchToken();
 }
 
 function simpleCal() {
@@ -325,6 +347,43 @@ function simpleCal() {
     }
 };
 
+
+function launchToken() {
+    document.getElementById('launch').addEventListener('click', function(event) {
+        event.preventDefault();
+        validateForm();
+    });
+    const launch = document.getElementById('launch');
+    // const checkFormFields = document.querySelector('.form__input');
+    launch.addEventListener('click',function() {
+        console.log('You have hit launch');
+            const apiUrl = xbarUrl;
+            const dataToSend = {
+                key1: 'value1',
+                key2: 'value2',
+            };
+
+            fetch(apiUrl, {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dataToSend)
+            })
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Network response was not ok ' + response.statusText);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Data successfully sent:', data);
+            })
+            .catch(error => {
+                console.error('There has been a problem with your fetch operation:', error);
+            });
+        });
+    }
 
 function observeAndAddCard() {
     const observer = new MutationObserver((mutations) => {
