@@ -16,6 +16,41 @@ function getUserData() {
 const userData = getUserData();
 console.log(userData);
 
+document.getElementById("loginForm").addEventListener("submit", function(event) {
+    event.preventDefault();
+
+    const username = document.getElementById("username").value;
+    const password = document.getElementById("password").value;
+
+    const apiEndpoint = "https://example.com/api/login";
+
+    const payload = {
+        username: username,
+        password: password
+    };
+
+    fetch(apiEndpoint, {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        if (data.success) {
+            window.location.href = "/home";
+        } else {
+            document.getElementById("errorMessage").style.display = "block";
+        }
+    })
+    .catch(error => {
+        console.error("Error:", error);
+        document.getElementById("errorMessage").textContent = "An error occurred. Please try again.";
+        document.getElementById("errorMessage").style.display = "block";
+    });
+});
+
 // //to be edited for the interaction with the api
 // function getDataFromAPI() {
 //     const apiUrl = 'https://api.xbar.com/data';

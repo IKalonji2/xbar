@@ -110,7 +110,7 @@ table th {
     .sidebar {padding-top: 15px;}
     .sidebar a {font-size: 1.125rem;}
 }
-/* .bg-cover {
+.bg-cover {
     width: 450px;
     height: 450px;
 }
@@ -126,7 +126,15 @@ table th {
     position: absolute;
     top: 300px;
     left: 160px;
-  } */
+  }
+
+  .btn-container {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin-top: 10px;
+  }
 
   .login-btn{    
     display : flex;
@@ -144,4 +152,13 @@ table th {
 }
 .login-btn:hover{
     background-color: #f0b97b;
+}
+.login-btn a{
+    color: black;
+    text-decoration: none;
+
+}
+.forgot-password {
+    font-weight: 600;
+    color: #ddd;
 }
