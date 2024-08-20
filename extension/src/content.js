@@ -120,6 +120,8 @@ async function swapOnXCard(targetElement) {
                     </div>
                 </div>
             </label>
+            <span class="error-message" id="token-a"></span>
+
         </div>
         <div class="form-group">
             <label class="input-label">
@@ -131,6 +133,7 @@ async function swapOnXCard(targetElement) {
                     </div>
                 </div>
             </label>
+            <span class="error-message" id="token-b"></span>
         </div>
         <div class="transact-container">
             <button id="swap" class="transact">Swap</button>
@@ -227,6 +230,7 @@ async function swapOnXCard(targetElement) {
     await renderChart();
     await renderMarketData();
     simpleCal();
+    swapToken();
 }
 
 async function launchOnXCard(targetElement) {
@@ -349,41 +353,102 @@ function simpleCal() {
 
 
 function launchToken() {
-    document.getElementById('launch').addEventListener('click', function(event) {
-        event.preventDefault();
-        validateForm();
-    });
     const launch = document.getElementById('launch');
-    // const checkFormFields = document.querySelector('.form__input');
-    launch.addEventListener('click',function() {
+    launch.addEventListener('click',function( event) {
+        event.preventDefault();
         console.log('You have hit launch');
-            const apiUrl = xbarUrl;
-            const dataToSend = {
-                key1: 'value1',
-                key2: 'value2',
-            };
 
-            fetch(apiUrl, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify(dataToSend)
-            })
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Network response was not ok ' + response.statusText);
-                }
-                return response.json();
-            })
-            .then(data => {
-                console.log('Data successfully sent:', data);
-            })
-            .catch(error => {
-                console.error('There has been a problem with your fetch operation:', error);
-            });
+        const apiUrl = xbarUrl+'/launch';
+
+        const tokenVal = document.getElementById('tokenAVal').value.trim();
+        const file = tokenIcon.files[0];
+        if (!file) {
+            alert('Please select a file.');
+            return;
+        }
+        const dataToSend = {
+            'token name': 'value1',
+            'token symbol': 'value2',
+            'supply' : 'value3',
+            'file' : file
+        };
+
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data successfully sent:', data);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
         });
-    }
+    });
+}
+
+function swapToken() {
+    const swap = document.getElementById('swap');
+    swap.addEventListener('click',function( event) {
+        event.preventDefault();
+        console.log('You have hit swap');
+
+        let isValid = true;
+
+        const apiUrl = xbarUrl+'/swap';
+
+        const tokenVal = document.getElementById('tokenAVal');
+
+        clearErrors();
+
+        if (tokenVal === '') {
+            showError('token-a','required')
+            isValid = false;
+        }
+        const dataToSend = {
+            'swap': 'value1',
+            'receive': 'value2',
+        };
+
+        fetch(apiUrl, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(dataToSend)
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Network response was not ok ' + response.statusText);
+            }
+            return response.json();
+        })
+        .then(data => {
+            console.log('Data successfully sent:', data);
+        })
+        .catch(error => {
+            console.error('There has been a problem with your fetch operation:', error);
+        });
+    });
+}
+function showError(elementId, message) {
+    const errorElement = document.getElementById(elementId);
+    errorElement.textContent = message;
+    errorElement.style.color = 'red';
+}
+
+function clearErrors() {
+    const errorElements = document.querySelectorAll('.error-message');
+    errorElements.forEach(el => el.textContent = '');
+}
 
 function observeAndAddCard() {
     const observer = new MutationObserver((mutations) => {
