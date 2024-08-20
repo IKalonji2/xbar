@@ -38,5 +38,3 @@ export const createToken = async (name: string, symbol: string) => {
 
   return tokenId?.toString();
 };
-
-

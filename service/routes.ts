@@ -16,12 +16,12 @@ router.post("/create-token", async (req, res) => {
 });
 
 router.post("/swap-hbar-to-token", (req, res) => {
-  // Implement swap logic
+  
   res.json({ success: true });
 });
 
 router.post("/swap-token-to-hbar", (req, res) => {
-  // Implement swap logic
+  
   res.json({ success: true });
 });
 

@@ -43,4 +43,3 @@ const createToken = (name, symbol) => __awaiter(void 0, void 0, void 0, function
     return tokenId === null || tokenId === void 0 ? void 0 : tokenId.toString();
 });
 exports.createToken = createToken;
-
